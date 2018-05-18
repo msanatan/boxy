@@ -7,6 +7,7 @@ const config = {
   parent: 'app',
   width: 700,
   height: 700,
+  pixelArt: true,
   scene: [BootScene, PlayScene],
   physics: {
     default: 'arcade',
