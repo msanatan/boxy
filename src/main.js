@@ -5,9 +5,16 @@ import PlayScene from './scenes/PlayScene'
 const config = {
   type: Phaser.AUTO,
   parent: 'app',
-  width: 800,
-  height: 600,
-  scene: [BootScene, PlayScene]
+  width: 700,
+  height: 700,
+  scene: [BootScene, PlayScene],
+  physics: {
+    default: 'arcade',
+    arcade: {
+        gravity: { y: 500 }, // will affect our player sprite
+        debug: false // change if you need
+    }
+  },
 }
 
 const game = new Phaser.Game(config)
