@@ -6,15 +6,10 @@ export default class PlayScene extends Scene {
   }
 
   create () {
-    const logo = this.add.image(400, 150, 'logo')
-
-    this.tweens.add({
-      targets: logo,
-      y: 450,
-      duration: 2000,
-      ease: 'Power2',
-      yoyo: true,
-      loop: -1
-    })
+    this.map = this.make.tilemap({key: 'level1'});
+    let tiles = this.map.addTilesetImage('colour_palette', 'colour_palette');
+    let backgroundLayer = this.map.createStaticLayer('Background', tiles, 0, 0);
+    this.platformLayer = this .map.createDynamicLayer('Platforms', tiles, 0, 0);
+    this.platformLayer.setCollisionByProperty({ collides: true });
   }
 }
