@@ -6,7 +6,7 @@ const config = {
   type: Phaser.AUTO,
   parent: 'app',
   width: 700,
-  height: 700,
+  height: 770,
   pixelArt: true,
   scene: [BootScene, PlayScene],
   physics: {
