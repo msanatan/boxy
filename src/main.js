@@ -5,15 +5,15 @@ import PlayScene from './scenes/PlayScene'
 const config = {
   type: Phaser.AUTO,
   parent: 'app',
-  width: 700,
-  height: 770,
+  width: window.innerWidth,
+  height: window.innerHeight,
   pixelArt: true,
   scene: [BootScene, PlayScene],
   physics: {
     default: 'arcade',
     arcade: {
-        gravity: { y: 500 }, // will affect our player sprite
-        debug: false // change if you need
+        gravity: { y: 500 },
+        debug: false
     }
   },
 }
