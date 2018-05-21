@@ -9,15 +9,10 @@ export default class PlayScene extends Scene {
     // Set up the level, first by displaying each layer
     this.map = this.make.tilemap({ key: 'level1' });
     let tiles = this.map.addTilesetImage('colour_palette', 'colour_palette');
-    let backgroundLayer = this.map.createStaticLayer('Background', tiles, 0, 0);
-    this.platformLayer = this.map.createDynamicLayer('Platforms', tiles, 0, 0);
+    let backgroundLayer = this.map.createStaticLayer('Background', tiles);
+    this.platformLayer = this.map.createDynamicLayer('Platforms', tiles);
     this.platformLayer.setCollisionByExclusion([-1]);
-    this.lavaLayer = this.map.createDynamicLayer('Lava', tiles, 0, 0);
-
-    // Scale the layers to the screen's dimensions
-    backgroundLayer.setScale(this.sys.game.config.width / this.map.widthInPixels, 1);
-    this.platformLayer.setScale(this.sys.game.config.width / this.map.widthInPixels, 1);
-    this.lavaLayer.setScale(this.sys.game.config.width / this.map.widthInPixels, 1);
+    this.lavaLayer = this.map.createDynamicLayer('Lava', tiles);
 
     // Create the player
     this.player = this.physics.add.sprite(
@@ -27,15 +22,12 @@ export default class PlayScene extends Scene {
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
 
-    // Find the real bounds of the screen
-    let scaledWidth = this.platformLayer.width * this.platformLayer.scaleX;
-    let scaledHeight = this.platformLayer.height * this.platformLayer.scaleY;
     // We need to scale the world in the physics engine
-    this.physics.world.bounds.width = scaledWidth;
-    this.physics.world.bounds.height = scaledHeight;
+    this.physics.world.bounds.width = this.map.widthInPixels;
+    this.physics.world.bounds.height = this.map.heightInPixels;
     this.physics.add.collider(this.player, this.platformLayer);
     // Set the bounds on the camera as well
-    this.cameras.main.setBounds(0, 0, scaledWidth, scaledHeight);
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     this.cameras.main.startFollow(this.player);
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -51,7 +43,7 @@ export default class PlayScene extends Scene {
     }
 
     // Jumping
-    if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.player.body.onFloor()) {
+    if ((this.cursors.space.isDown) && this.player.body.onFloor()) {
       this.player.body.setVelocityY(-350);
     }
   }
