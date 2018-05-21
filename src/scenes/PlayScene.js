@@ -61,12 +61,6 @@ export default class PlayScene extends Scene {
     }
   }
 
-  checkContains(sprite1, sprite2) {
-    let bounds1 = sprite1.getBounds();
-    let bounds2 = sprite2.getBounds();
-    return Phaser.Geom.Rectangle.Contains(bounds1, bounds2);
-  }
-
   playerDies() {
     this.player.setVelocity(0, 0);
     this.player.x = this.originalPlayerX;
