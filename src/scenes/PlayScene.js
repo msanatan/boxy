@@ -12,6 +12,9 @@ export default class PlayScene extends Scene {
     let backgroundLayer = this.map.createStaticLayer('Background', tiles);
     this.platformLayer = this.map.createDynamicLayer('Platforms', tiles);
     this.platformLayer.setCollisionByExclusion([-1]);
+    this.lavaLayer = this.map.createDynamicLayer('Lava', tiles);
+    this.lavaLayer.setTileIndexCallback(2, () => this.playerDies());
+
     this.originalPlayerX = this.map.tileWidth;
     this.originalPlayerY = this.map.heightInPixels - (this.map.tileHeight * 2);
 
@@ -22,8 +25,6 @@ export default class PlayScene extends Scene {
       'player');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
-    this.lavaLayer = this.map.createDynamicLayer('Lava', tiles);
-    this.lavaLayer.setTileIndexCallback(2, () => this.playerDies());
 
     // We need to scale the world in the physics engine
     this.physics.world.bounds.width = this.map.widthInPixels;
@@ -44,6 +45,9 @@ export default class PlayScene extends Scene {
       repeat: 10,
     };
 
+    this.collidingBlocks = this.physics.add.staticGroup();
+    this.createFromObjects(this.map, "Moving Boxes", this.collidingBlocks);
+    this.physics.add.collider(this.player, this.collidingBlocks, this.playerDies, null, this);
   }
 
   update(time, delta) {
@@ -67,5 +71,18 @@ export default class PlayScene extends Scene {
     this.player.y = this.originalPlayerY;
     this.player.setAlpha(0);
     let tw = this.tweens.add(this.playerDieTween);
+  }
+
+  // Loosely based on https://github.com/photonstorm/phaser-ce/blob/v2.10.5/src/tilemap/Tilemap.js#L379
+  createFromObjects(map, name, group) {
+    let objectLayers = map.objects;
+    objectLayers.forEach((ol) => {
+      if (ol.name == name) {
+        ol.objects.forEach((olObject) => {
+          let obj = group.create(olObject.x, olObject.y, 'player');
+          group.add(obj);
+        });
+      }
+    });
   }
 }
