@@ -48,7 +48,7 @@ export default class PlayScene extends Scene {
     this.collidingBlocks = this.physics.add.group({
       immovable: true
     });
-    this.createFromObjects(this.map, 'Moving Boxes', this.collidingBlocks, false, true);
+    this.createFromObjects(this.map, 'Moving Boxes', 'colour_palette', 5, this.collidingBlocks, false, true);
     this.physics.add.collider(this.player, this.collidingBlocks, this.playerDies, null, this);
   }
 
@@ -108,12 +108,12 @@ export default class PlayScene extends Scene {
   }
 
   // Loosely based on https://github.com/photonstorm/phaser-ce/blob/v2.10.5/src/tilemap/Tilemap.js#L379
-  createFromObjects(map, name, group, gravity, immovable) {
+  createFromObjects(map, name, tileset, frameId, group, gravity, immovable) {
     let objectLayers = map.objects;
     objectLayers.forEach((ol) => {
       if (ol.name == name) {
         ol.objects.forEach((olObject) => {
-          let obj = group.create(olObject.x, olObject.y, 'player');
+          let obj = group.create(olObject.x, olObject.y, tileset, frameId);
           obj.body.allowGravity = gravity;
           obj.body.immovable = immovable;
           group.add(obj);
