@@ -65,6 +65,38 @@ export default class PlayScene extends Scene {
     if ((this.cursors.space.isDown) && this.player.body.onFloor()) {
       this.player.body.setVelocityY(-350);
     }
+
+    // First box encountered
+    let firstBox = this.collidingBlocks.getChildren()[1];
+    if (firstBox.body.x >= 610) {
+      firstBox.body.setVelocityX(-300);
+    } else if (firstBox.body.x <= 200) {
+      firstBox.body.setVelocityX(350);
+    }
+
+    // Second box encountered
+    let secondBox = this.collidingBlocks.getChildren()[0];
+    if (secondBox.body.x <= 15) {
+      secondBox.body.setVelocityX(300);
+    } else if (secondBox.body.x >= 550) {
+      secondBox.body.setVelocityX(-300);
+    }
+
+    // Third box encountered
+    let thirdBox = this.collidingBlocks.getChildren()[2];
+    if (thirdBox.body.y <= 40) {
+      thirdBox.body.setVelocityY(300);
+    } else if (thirdBox.body.y >= 290) {
+      thirdBox.body.setVelocityY(-250);
+    }
+
+    // Fourth box encountered
+    let fourthBox = this.collidingBlocks.getChildren()[3];
+    if (fourthBox.body.y <= 40) {
+      fourthBox.body.setVelocityY(300);
+    } else if (fourthBox.body.y >= 290) {
+      fourthBox.body.setVelocityY(-300);
+    }
   }
 
   playerDies() {
