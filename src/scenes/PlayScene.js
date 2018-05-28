@@ -23,7 +23,7 @@ export default class PlayScene extends Scene {
       this.originalPlayerX,
       this.originalPlayerY,
       'player');
-    this.player.setBounce(0.2);
+    this.player.setBounce(0.175);
     this.player.setCollideWorldBounds(true);
 
     // We need to scale the world in the physics engine
@@ -46,8 +46,59 @@ export default class PlayScene extends Scene {
     };
 
     this.collidingBlocks = this.physics.add.staticGroup();
-    this.createFromObjects(this.map, "Moving Boxes", this.collidingBlocks);
-    this.physics.add.collider(this.player, this.collidingBlocks, this.playerDies, null, this);
+    this.createFromObjects(this.map, 'Moving Boxes', this.collidingBlocks);
+
+    let box1Tween = this.tweens.timeline({
+      targets: this.collidingBlocks.getChildren()[1],
+      loop: -1,
+      tweens: [
+        {
+          x: 200,
+          ease: 'Linear',
+          duration: 3000,
+          yoyo: true,
+        },
+      ]
+    });
+
+    let box2Tween = this.tweens.timeline({
+      targets: this.collidingBlocks.getChildren()[0],
+      loop: -1,
+      tweens: [
+        {
+          x: 700,
+          ease: 'Power2',
+          duration: 2000,
+          yoyo: true,
+        },
+      ]
+    });
+
+    let box3Tween = this.tweens.timeline({
+      targets: this.collidingBlocks.getChildren()[2],
+      loop: -1,
+      tweens: [
+        {
+          y: 315,
+          ease: 'Linear',
+          duration: 600,
+          yoyo: true,
+        },
+      ]
+    });
+
+    let box4Tween = this.tweens.timeline({
+      targets: this.collidingBlocks.getChildren()[3],
+      loop: -1,
+      tweens: [
+        {
+          y: 55,
+          ease: 'Linear',
+          duration: 600,
+          yoyo: true,
+        },
+      ]
+    });
   }
 
   update(time, delta) {
