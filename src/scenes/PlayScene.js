@@ -45,60 +45,11 @@ export default class PlayScene extends Scene {
       repeat: 10,
     };
 
-    this.collidingBlocks = this.physics.add.staticGroup();
-    this.createFromObjects(this.map, 'Moving Boxes', this.collidingBlocks);
-
-    let box1Tween = this.tweens.timeline({
-      targets: this.collidingBlocks.getChildren()[1],
-      loop: -1,
-      tweens: [
-        {
-          x: 200,
-          ease: 'Linear',
-          duration: 3000,
-          yoyo: true,
-        },
-      ]
+    this.collidingBlocks = this.physics.add.group({
+      immovable: true
     });
-
-    let box2Tween = this.tweens.timeline({
-      targets: this.collidingBlocks.getChildren()[0],
-      loop: -1,
-      tweens: [
-        {
-          x: 700,
-          ease: 'Power2',
-          duration: 2000,
-          yoyo: true,
-        },
-      ]
-    });
-
-    let box3Tween = this.tweens.timeline({
-      targets: this.collidingBlocks.getChildren()[2],
-      loop: -1,
-      tweens: [
-        {
-          y: 315,
-          ease: 'Linear',
-          duration: 600,
-          yoyo: true,
-        },
-      ]
-    });
-
-    let box4Tween = this.tweens.timeline({
-      targets: this.collidingBlocks.getChildren()[3],
-      loop: -1,
-      tweens: [
-        {
-          y: 55,
-          ease: 'Linear',
-          duration: 600,
-          yoyo: true,
-        },
-      ]
-    });
+    this.createFromObjects(this.map, 'Moving Boxes', this.collidingBlocks, false, true);
+    this.physics.add.collider(this.player, this.collidingBlocks, this.playerDies, null, this);
   }
 
   update(time, delta) {
@@ -125,12 +76,14 @@ export default class PlayScene extends Scene {
   }
 
   // Loosely based on https://github.com/photonstorm/phaser-ce/blob/v2.10.5/src/tilemap/Tilemap.js#L379
-  createFromObjects(map, name, group) {
+  createFromObjects(map, name, group, gravity, immovable) {
     let objectLayers = map.objects;
     objectLayers.forEach((ol) => {
       if (ol.name == name) {
         ol.objects.forEach((olObject) => {
           let obj = group.create(olObject.x, olObject.y, 'player');
+          obj.body.allowGravity = gravity;
+          obj.body.immovable = immovable;
           group.add(obj);
         });
       }
