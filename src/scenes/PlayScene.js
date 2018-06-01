@@ -50,6 +50,19 @@ export default class PlayScene extends Scene {
     });
     this.createFromObjects(this.map, 'Moving Boxes', 'colour_palette', 5, this.collidingBlocks, false, true);
     this.physics.add.collider(this.player, this.collidingBlocks, this.playerDies, null, this);
+
+    // Make escape the pause button
+    // This logic has to be done here because pausing a scene means the update
+    // function isn't called
+    this.paused = false;
+    this.input.keyboard.on('keydown_ESC', (e) => {
+      if (this.paused) {
+        this.scene.resume();
+      } else {
+        this.scene.pause();
+      }
+      this.paused = !this.paused;
+    });
   }
 
   update(time, delta) {
