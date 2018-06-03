@@ -129,6 +129,7 @@ export default class PlayScene extends Scene {
     this.player.setVelocity(0, 0);
     this.player.x = this.originalPlayerX;
     this.player.y = this.originalPlayerY;
+    this.sound.play('playerDiesSfx');
     this.player.setAlpha(0);
     let tw = this.tweens.add(this.playerDieTween);
   }
