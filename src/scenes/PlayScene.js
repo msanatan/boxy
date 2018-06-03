@@ -58,8 +58,20 @@ export default class PlayScene extends Scene {
     this.input.keyboard.on('keydown_ESC', (e) => {
       if (this.paused) {
         this.scene.resume();
+        this.pauseText.destroy();
       } else {
         this.scene.pause();
+        this.pauseText = this.add.text(
+          this.physics.world.bounds.width / 2,
+          this.physics.world.bounds.height / 3,
+          'Paused',
+          {
+            fontFamily: 'Helvetica, Impact, Arial',
+            fontSize: 64,
+            color: '#ffffff',
+            align: 'center',
+          });
+        this.pauseText.setOrigin(0.5);
       }
       this.paused = !this.paused;
     });
