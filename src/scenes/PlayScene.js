@@ -47,6 +47,7 @@ export default class PlayScene extends Scene {
     };
 
     this.collidingBlocks = this.physics.add.group({
+      allowGravity: false,
       immovable: true
     });
     this.createFromObjects(this.map, 'Moving Boxes', 'colourPalette', 5, this.collidingBlocks, false, true);
@@ -156,7 +157,7 @@ export default class PlayScene extends Scene {
       if (ol.name == name) {
         ol.objects.forEach((olObject) => {
           let obj = group.create(olObject.x, olObject.y, tileset, frameId);
-          obj.body.allowGravity = gravity;
+          obj.body.setAllowGravity(gravity);
           obj.body.immovable = immovable;
           group.add(obj);
         });
