@@ -14,7 +14,7 @@ export default class PlayScene extends Scene {
     this.platformLayer.setCollisionByExclusion([-1]);
     this.lavaLayer = this.map.createDynamicLayer('Lava', tiles);
     this.lavaLayer.setTileIndexCallback(2, () => this.playerDies());
-    this.lavaLayer.setTileIndexCallback(5, () => this.playerWins());
+    this.platformLayer.setTileIndexCallback(5, () => this.playerWins());
 
     this.originalPlayerX = this.map.tileWidth;
     this.originalPlayerY = this.map.heightInPixels - (this.map.tileHeight * 2);
@@ -131,6 +131,21 @@ export default class PlayScene extends Scene {
     this.player.y = this.originalPlayerY;
     this.player.setAlpha(0);
     let tw = this.tweens.add(this.playerDieTween);
+  }
+
+  playerWins() {
+    this.scene.pause();
+    let winText = this.add.text(
+      this.physics.world.bounds.width / 2,
+      this.physics.world.bounds.height / 2.5,
+      'Stage Complete!',
+      {
+        fontFamily: 'Impact, Helvetica, Arial',
+        fontSize: 80,
+        color: '#ffff4c',
+        align: 'center',
+      });
+      winText.setOrigin(0.5);
   }
 
   // Loosely based on https://github.com/photonstorm/phaser-ce/blob/v2.10.5/src/tilemap/Tilemap.js#L379
