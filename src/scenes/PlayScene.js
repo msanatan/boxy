@@ -8,12 +8,13 @@ export default class PlayScene extends Scene {
   create() {
     // Set up the level, first by displaying each layer
     this.map = this.make.tilemap({ key: 'level1' });
-    let tiles = this.map.addTilesetImage('colour_palette', 'colour_palette');
+    let tiles = this.map.addTilesetImage('colour_palette', 'colourPalette');
     let backgroundLayer = this.map.createStaticLayer('Background', tiles);
     this.platformLayer = this.map.createDynamicLayer('Platforms', tiles);
     this.platformLayer.setCollisionByExclusion([-1]);
     this.lavaLayer = this.map.createDynamicLayer('Lava', tiles);
     this.lavaLayer.setTileIndexCallback(2, () => this.playerDies());
+    this.lavaLayer.setTileIndexCallback(5, () => this.playerWins());
 
     this.originalPlayerX = this.map.tileWidth;
     this.originalPlayerY = this.map.heightInPixels - (this.map.tileHeight * 2);
@@ -48,7 +49,7 @@ export default class PlayScene extends Scene {
     this.collidingBlocks = this.physics.add.group({
       immovable: true
     });
-    this.createFromObjects(this.map, 'Moving Boxes', 'colour_palette', 5, this.collidingBlocks, false, true);
+    this.createFromObjects(this.map, 'Moving Boxes', 'colourPalette', 5, this.collidingBlocks, false, true);
     this.physics.add.collider(this.player, this.collidingBlocks, this.playerDies, null, this);
 
     // Make escape the pause button
