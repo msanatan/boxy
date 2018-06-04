@@ -11,6 +11,6 @@
     "phaser": "^3.9.0"
   },
   "devDependencies": {
-    "@phaser-cli/scripts": "^1.0.6"
+    "@phaser-cli/scripts": "^1.0.7"
   }
 }
