@@ -15,9 +15,9 @@
     preload () {
       this.load.image('player', player);
       this.load.spritesheet('colourPalette', colourPalette, {frameWidth: 35, frameHeight: 35});
-      this.load.tilemapTiledJSON('level1', level1);
       this.load.audio('playerDiesSfx', [playerDieSfxOgg, playerDieSfxMp3]);
       this.load.bitmapFont('llpixel3', llpixel3Png, llpixel3Xml);
+      this.load.tilemapTiledJSON('level1', level1);
     }
 
     create () {

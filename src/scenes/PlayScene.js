@@ -63,16 +63,13 @@ export default class PlayScene extends Scene {
         this.pauseText.destroy();
       } else {
         this.scene.pause();
-        this.pauseText = this.add.text(
+        this.pauseText = this.add.bitmapText(
           this.physics.world.bounds.width / 2,
           this.physics.world.bounds.height / 3,
+          'llpixel3',
           'Paused',
-          {
-            fontFamily: 'Helvetica, Impact, Arial',
-            fontSize: 64,
-            color: '#ffffff',
-            align: 'center',
-          });
+        );
+        this.pauseText.fontSize = 64;
         this.pauseText.setOrigin(0.5);
       }
       this.paused = !this.paused;
@@ -137,17 +134,14 @@ export default class PlayScene extends Scene {
 
   playerWins() {
     this.scene.pause();
-    let winText = this.add.text(
+    let winText = this.add.bitmapText(
       this.physics.world.bounds.width / 2,
       this.physics.world.bounds.height / 2.5,
+      'llpixel3',
       'Stage Complete!',
-      {
-        fontFamily: 'Impact, Helvetica, Arial',
-        fontSize: 80,
-        color: '#ffff4c',
-        align: 'center',
-      });
-      winText.setOrigin(0.5);
+    );
+    winText.fontSize = 64;
+    winText.setOrigin(0.5);
   }
 
   // Loosely based on https://github.com/photonstorm/phaser-ce/blob/v2.10.5/src/tilemap/Tilemap.js#L379
