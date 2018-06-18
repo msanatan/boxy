@@ -2,9 +2,12 @@
 
 Just your platformer about a box trying to get by.
 
-## Usage
+## Playing
 
-### Running in Development
+Left and right arrows to move around, Space bar to jump and Esc to pause. Goal 
+is to reach the blue boxes :-)
+
+## Running in Development
 
 ```bash
 npm start
@@ -12,7 +15,7 @@ npm start
 yarn start
 ```
 
-### Build for Production
+## Build for Production
 
 ```bash
 npm run build
